@@ -28,11 +28,11 @@ public class Tests {
     @Test
     public void verifyInstrumentClusterLightOn() {
 
-        Assertions.assertTrue(movingCar.getInstrumentLight(), "Instrument cluster light was off while the car state is %s: " +
+        Assertions.assertTrue(movingCar.getInstrumentLight(), "Instrument cluster light was off while the car state is: " +
                 movingCar.getCarState());
 
         movingCar.setCarState(CarState.CONTACT);
-        Assertions.assertTrue(movingCar.getInstrumentLight(), "Instrument cluster light was off while the car state is %s: " +
+        Assertions.assertTrue(movingCar.getInstrumentLight(), "Instrument cluster light was off while the car state is: " +
                 movingCar.getCarState());
     }
 
@@ -40,11 +40,11 @@ public class Tests {
     @Test
     public void verifyInstrumentClusterLightOffOn() {
 
-        Assertions.assertFalse(staticCar.getInstrumentLight(), "Instrument cluster light was on while the car state is %s: " +
+        Assertions.assertFalse(staticCar.getInstrumentLight(), "Instrument cluster light was on while the car state is: " +
                 staticCar.getCarState());
 
         staticCar.setCarState(CarState.ON);
-        Assertions.assertTrue(staticCar.getInstrumentLight(), "Instrument cluster light was off while the car state is %s: " +
+        Assertions.assertTrue(staticCar.getInstrumentLight(), "Instrument cluster light was off while the car state is: " +
                 staticCar.getCarState());
 
     }
@@ -53,16 +53,16 @@ public class Tests {
     @Test
     public void verifyInstrumentClusterLightOnOff() {
 
-        Assertions.assertTrue(movingCar.getInstrumentLight(), "Instrument cluster light was off while the car state is %s: " +
+        Assertions.assertTrue(movingCar.getInstrumentLight(), "Instrument cluster light was off while the car state is: " +
                 movingCar.getCarState());
 
         movingCar.setCarState(CarState.OFF);
-        Assertions.assertFalse(movingCar.getInstrumentLight(), "Instrument cluster light was on while the car state is %s: " +
+        Assertions.assertFalse(movingCar.getInstrumentLight(), "Instrument cluster light was on while the car state is: " +
                 movingCar.getCarState());
 
 //        Transition from off to contact
         staticCar.setCarState(CarState.CONTACT);
-        Assertions.assertTrue(staticCar.getInstrumentLight(), "Instrument cluster light was off while the car state is %s: " +
+        Assertions.assertTrue(staticCar.getInstrumentLight(), "Instrument cluster light was off while the car state is: " +
                 staticCar.getCarState());
     }
 
@@ -70,7 +70,7 @@ public class Tests {
     @Test
     public void verifyInstrumentClusterLightOff() {
 
-        Assertions.assertFalse(staticCar.getInstrumentLight(), "Instrument cluster light was on while the car state is %s: " +
+        Assertions.assertFalse(staticCar.getInstrumentLight(), "Instrument cluster light was on while the car state is: " +
                 staticCar.getCarState());
     }
 
@@ -81,27 +81,27 @@ public class Tests {
 
         Assertions.assertEquals(movingCar.getCarSpeed() * 0.1,
                 movingCar.getSpeedometer(),
-                "The speedometer shows incorrect speed: %s" +
+                "The speedometer shows incorrect speed: " +
                         movingCar.getCarSpeed());
 
         movingCar.setCarSpeed(0);
         Assertions.assertEquals(movingCar.getCarSpeed() * 0.1,
                 movingCar.getSpeedometer(),
-                "The speedometer shows incorrect speed: %s" +
+                "The speedometer shows incorrect speed: " +
                         movingCar.getCarSpeed());
 
         movingCar.setCarSpeed(4098);
 //        Assumed that for speed over the speed limit the speedometer displays always 250km/h, could be checked for an error as well
         Assertions.assertEquals(250,
                 movingCar.getSpeedometer(),
-                "The speedometer shows incorrect speed: %s" +
+                "The speedometer shows incorrect speed: " +
                         movingCar.getCarSpeed());
 
         movingCar.setCarSpeed(2555);
 //        Assumed that for speed over the speed limit the speedometer displays always 250km/h, could be checked for an error as well
         Assertions.assertEquals(250,
                 movingCar.getSpeedometer(),
-                "The speedometer shows incorrect speed: %s" +
+                "The speedometer shows incorrect speed: " +
                         movingCar.getCarSpeed());
     }
 
@@ -109,17 +109,17 @@ public class Tests {
     @Test
     public void verifySpeedWarning() {
         movingCar.setCarSpeed(2500);
-        Assertions.assertTrue(movingCar.getSpeedWarning(), "The speedometer doesn't show a warning when speed is: %s" +
+        Assertions.assertTrue(movingCar.getSpeedWarning(), "The speedometer doesn't show a warning when speed is: " +
                 movingCar.getCarSpeed());
 
 //        Checking transition -> when the speed decreases the warning should disappear
         movingCar.setCarSpeed(2470);
-        Assertions.assertFalse(movingCar.getSpeedWarning(), "The speedometer shows a warning when speed is: %s" +
+        Assertions.assertFalse(movingCar.getSpeedWarning(), "The speedometer shows a warning when speed is: " +
                 movingCar.getCarSpeed());
 
 //        Checking transition -> when the speed increases the warning should appear
         movingCar.setCarSpeed(2480);
-        Assertions.assertTrue(movingCar.getSpeedWarning(), "The speedometer doesn't show a warning when speed is: %s" +
+        Assertions.assertTrue(movingCar.getSpeedWarning(), "The speedometer doesn't show a warning when speed is: " +
                 movingCar.getCarSpeed());
 
     }
@@ -182,35 +182,30 @@ public class Tests {
         movingCar.setCarState(CarState.CONTACT);
         Assertions.assertEquals(SeatBeltLight.OFF,
                 movingCar.getSeatBeltLight(),
-                "The seatbelt telltale is %s for buckled belt in a car on contact"
-                        + movingCar.getSeatBeltLight());
+                "The seatbelt telltale is " + movingCar.getSeatBeltLight() +" for buckled belt in a car on contact");
 
 //       Check if the telltale remains off for buckled seatbelt and different speed
         movingCar.setCarSpeed(240);
         movingCar.setCarState(CarState.ON);
         Assertions.assertEquals(SeatBeltLight.OFF,
                 movingCar.getSeatBeltLight(),
-                "The seatbelt telltale is %s for buckled belt in a moving car"
-                        + movingCar.getSeatBeltLight());
+                "The seatbelt telltale is " + movingCar.getSeatBeltLight() + " for buckled belt in a moving car");
 
         movingCar.setCarSpeed(250);
         Assertions.assertEquals(SeatBeltLight.OFF,
                 movingCar.getSeatBeltLight(),
-                "The seatbelt telltale is %s for buckled belt in a moving car with speed 25km/h"
-                        + movingCar.getSeatBeltLight());
+                "The seatbelt telltale is " + movingCar.getSeatBeltLight() +" for buckled belt in a moving car with speed 25km/h");
 
         movingCar.setCarSpeed(260);
         Assertions.assertEquals(SeatBeltLight.OFF,
                 movingCar.getSeatBeltLight(),
-                "The seatbelt telltale is %s for buckled belt in a moving car with speed 26km/h"
-                        + movingCar.getSeatBeltLight());
+                "The seatbelt telltale is " + movingCar.getSeatBeltLight() +" for buckled belt in a moving car with speed 26km/h");
 
         movingCar.setCarSpeed(240);
         movingCar.setCarState(CarState.ON);
         Assertions.assertEquals(SeatBeltLight.OFF,
                 movingCar.getSeatBeltLight(),
-                "The seatbelt telltale is %s for buckled belt in a moving car"
-                        + movingCar.getSeatBeltLight());
+                "The seatbelt telltale is " + movingCar.getSeatBeltLight() +" for buckled belt in a moving car");
     }
 }
 
